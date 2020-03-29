@@ -8,7 +8,7 @@
 | № | Format       | Template name     | Progress     | Specs | Description |
 | :--- | :--------- | :----------- | :---------- | :---------- | :---------- |
 | 1 | .pmd        | [PDM.bt](https://github.com/AlexKimov/18wheels-file-formats/tree/master/templates/010editor/PDM.bt)        | **85%**      |          |  models |
-| 2 | .psm        | [PSM.bt](https://github.com/AlexKimov/18wheels-file-formats/tree/master/templates/010editors/PSM.bt)        | **85%**      | [           | models |
+| 2 | .psm        | [PSM.bt](https://github.com/AlexKimov/18wheels-file-formats/tree/master/templates/010editors/PSM.bt)        | **85%**      |            | models |
 
 **1. 18 wheels of steel: Across America**
 | № | Format       | Template name     | Progress     | Specs | Description |
