@@ -1,0 +1,117 @@
+//------------------------------------------------
+//--- 010 Editor v8.0.1 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: 
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+typedef struct {
+  FLOAT U;
+  FLOAT V;
+} VECTOR_2F;
+
+typedef struct {
+  FLOAT X;
+  FLOAT Y;
+  FLOAT Z;
+} VECTOR_3F;
+
+typedef struct {
+  FLOAT X;
+  FLOAT Y;
+  FLOAT Z;
+  FLOAT W;
+} VECTOR_4F;
+
+typedef struct {
+  UINT Unknown;
+  UINT OMCount;
+  UINT ObjectCount;
+  UINT Unknown;
+} FILE_HEADER;
+
+typedef struct {
+  UINT Unknown; //1
+
+  VECTOR_4F Rotation;
+  VECTOR_3F Position;
+  VECTOR_3F Vector;
+  VECTOR_4F Rotation;
+
+  UBYTE Unknown;
+  FLOAT Unknown;
+  char Name[16];
+} OM <name=getName>;
+
+FILE_HEADER FileHeader <name="File Header">;
+
+struct {
+  OM ObjectMatrix[FileHeader.OMCount] <optimize = false>;
+} MATERIALS <name="Object locator">;
+
+string getName(OM &om)
+{
+  return om.Name;
+};
+
+
+typedef struct {
+  char Name[16];
+  UINT FaceCount;
+  UINT VertexCount;
+  UINT MatrixIndex;
+  UINT Unknown; // 1
+  UINT Unknown; // 1
+
+  FLOAT Unknown;
+  VECTOR_3F Position;
+
+  struct {
+    VECTOR_3F VertexCoordinates[VertexCount];
+  } VERTEXES <name="Vertex coordinates">;
+
+  BYTE UnknownData[VertexCount];
+
+  struct {
+    FLOAT X;
+  } UNKNOWN[VertexCount] <name="Unknown">;
+
+  struct {
+    VECTOR_2F UV;
+    VECTOR_3F Normal;
+  } UV_NORMAL[VertexCount];
+
+  struct {
+    UINT16 I1;
+    UINT16 I2;
+    UINT16 I3;
+  } FACE_INDEXES[FaceCount];
+
+  struct {
+    UINT16 Index;
+  } UNKNOWN_INDEXES[FaceCount];  
+} OBJECT <name=getObjectName>;
+
+string getObjectName(OBJECT &object)
+{
+  return object.Name;
+};
+
+struct {
+  OBJECT Object[FileHeader.ObjectCount] <optimize = false>;
+} OBJECTS <name="Objects">;
+
+UINT Unknown;
+UINT Unknown;
+
+
+
+
+
+
