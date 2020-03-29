@@ -13,4 +13,4 @@
 **1. 18 wheels of steel: Across America**
 | № | Format       | Template name     | Progress     | Specs | Description |
 | :--- | :--------- | :----------- | :---------- | :---------- | :---------- |
-| 1 | .pmd        | [PSM.bt](https://github.com/AlexKimov/18wheels-file-formats/tree/master/templates/010editor/PSM(AA).bt)        | **85%**      |          |  models |
+| 1 | .psm        | [PSM(AA).bt](https://github.com/AlexKimov/18wheels-file-formats/tree/master/templates/010editor/PSM(AA).bt)        | **85%**      |          |  models |
