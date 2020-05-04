@@ -4,10 +4,10 @@ import os
 
 
 def registerNoesisTypes():
-    handle = noesis.register( "18 Wheels of Steel 3D model", ".psm")
+    handle = noesis.register( "Prism engine (18 Wheels of Steel / Hunting Unlimited) 3D model", ".psm")
 
-    noesis.setHandlerTypeCheck(handle, steelWheelsModelCheckType)
-    noesis.setHandlerLoadModel(handle, steelWheelsModelLoadModel)
+    noesis.setHandlerTypeCheck(handle, prism3DModelCheckType)
+    noesis.setHandlerLoadModel(handle, prism3DModelLoadModel)
         
     return 1 
     
@@ -61,7 +61,7 @@ class Vector3UI16:
         return (self.x, self.y, self.z)  
 
 
-class SteelWheelsModelMatrix:
+class Prism3DModelMatrix:
     def __init__(self):
         self.rot1 = Vector4F()
         self.pos1 = Vector3F()
@@ -89,7 +89,7 @@ class SteelWheelsModelMatrix:
         return self.getTransMat(self.rot2, self.pos2)
         
         
-class SteelWheelsModelLocator:
+class Prism3DModelLocator:
     def __init__(self):
         self.matrixes = []
         self.indexes = []
@@ -99,7 +99,7 @@ class SteelWheelsModelLocator:
     def read(self, reader):
         count = reader.readUInt()
         for i in range(count):
-            matrix = SteelWheelsModelMatrix()
+            matrix = Prism3DModelMatrix()
             matrix.read(reader)            
             self.matrixes.append(matrix)
 
@@ -109,8 +109,9 @@ class SteelWheelsModelLocator:
         self.names = [name.decode("ascii").rstrip('\0') for name in buffer]
 
 
-class SteelWheelsModelObject:
-    def __init__(self):
+class Prism3DModelObject:
+    def __init__(self, version=6):
+        self.version = version
         self.name = ""
         self.faceCount = 0        
         self.vertexCount = 0        
@@ -159,37 +160,40 @@ class SteelWheelsModelObject:
             indexes.read(reader)
             
             self.faceIndexes.append(indexes)            
+        
+        if self.version > 3:        
+            for i in range(self.faceCount):                
+                index = reader.readUShort()
             
-        for i in range(self.faceCount):                
-            index = reader.readUShort()
-            
-            self.faceIndexes2.append(index)         
+                self.faceIndexes2.append(index)         
         
         
-class SteelWheelsModel:
+class Prism3DModel:
     def __init__(self, reader):
         self.reader = reader
+        self.version = 0
         self.objectCount = 0
         self.omCount = 0
         self.locators = []
         self.objects = []
            
     def readHeader(self, reader):
-        reader.seek(4, NOESEEK_REL)
+        self.version = reader.readUInt()
         self.omCount = reader.readUInt()    
         self.objectCount = reader.readUInt()
-        reader.seek(4, NOESEEK_REL)
+        if self.version > 3:
+            reader.seek(4, NOESEEK_REL)
         
     def readLocators(self, reader):
         for i in range(self.omCount):            
-            locator = SteelWheelsModelLocator()
+            locator = Prism3DModelLocator()
             locator.read(reader)
             
             self.locators.append(locator)             
             
     def readObjects(self, reader):
         for i in range(self.objectCount):
-            obj = SteelWheelsModelObject()
+            obj = Prism3DModelObject(self.version)
             obj.read(reader)
 
             self.objects.append(obj)            
@@ -200,15 +204,15 @@ class SteelWheelsModel:
         self.readObjects(self.reader)
 
     
-def steelWheelsModelCheckType(data):     
+def prism3DModelCheckType(data):     
     
     return 1     
     
 
-def steelWheelsModelLoadModel(data, mdlList):
+def prism3DModelLoadModel(data, mdlList):
     #noesis.logPopup()
 
-    model = SteelWheelsModel(NoeBitStream(data))
+    model = Prism3DModel(NoeBitStream(data))
     model.read()
  
     ctx = rapi.rpgCreateContext()
