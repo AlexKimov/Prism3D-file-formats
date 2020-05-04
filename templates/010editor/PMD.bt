@@ -59,11 +59,11 @@ struct {
   VECTOR_3F Un1;
   VECTOR_3F Un2;
   VECTOR_3F U3;
-} DATA;
+} DATA <name="Unknown">;
 
 struct {
   OBJECT_HEADER ObjectHeader[FileHeader.OMCount] <optimize = false>;
-} HEADERS <name="Object locator">;
+} HEADERS <name="Object table">;
 
 string getName(OBJECT_HEADER &oh)
 {
@@ -90,14 +90,14 @@ struct {
       } UNKNOWN_INDEXES[HEADERS.ObjectHeader[i].FaceCount];  
 
       struct {
-        UINT16 X;
-        UINT16 Y;
-        UINT16 Z;
-        UINT16 Index;
-      } UNKNOWN_DATA[HEADERS.ObjectHeader[i].VertexCount] <name="coordinatates??">; 
+        UINT16 A;
+        UINT16 C;
+        UINT16 C;
+        UINT16 C;
+      } UNKNOWN_DATA[HEADERS.ObjectHeader[i].VertexCount] <name="coordinates??">; 
     
       struct {
-        VECTOR_2F UVCoordinastes [HEADERS.ObjectHeader[i].VertexCount];
+        VECTOR_2F UVCoordinates [HEADERS.ObjectHeader[i].VertexCount];
       } VERTEXES <name="UV coordinates">;
     } OBJECT_DATA;
   };

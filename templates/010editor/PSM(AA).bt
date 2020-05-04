@@ -31,64 +31,47 @@ typedef struct {
 
 typedef struct {
   UINT Unknown;
-  UINT ObjectCount;
   UINT OMCount;
-  UINT Unknown;
+  UINT ObjectCount;
+  UINT Length;
 } FILE_HEADER;
 
 typedef struct {
-  UINT Unknown; //1
+  UINT Count; 
 
-  VECTOR_4F Rotation;
-  VECTOR_3F Position;
-  VECTOR_3F Vector;
-  VECTOR_4F Rotation;
-
-  UBYTE Unknown;
-  FLOAT Unknown;
-  char Name[16];
-} OM <name=getName>;
-
-FILE_HEADER FileHeader <name="File Header">;
-
-struct {
-  if (SubStr(FileNameGetBase(GetFileName()), 0, 5) != "cabin")
-    OM ObjectMatrix[FileHeader.OMCount] <optimize = false>;
-  else
-    OM ObjectMatrix[FileHeader.OMCount + 1] <optimize = false>;
-} MATERIALS <name="Object locator">;
-
-string getName(OM &om)
-{
-  return om.Name;
-};
-
-if (SubStr(FileNameGetBase(GetFileName()), 0, 5) == "cabin")
-{
-  struct {
-  UINT Count;
   struct {
     VECTOR_4F Rotation;
     VECTOR_3F Position;
     VECTOR_3F Vector;
     VECTOR_4F Rotation;
-  } UNKN[Count];
-  BYTE UnknownData1[Count];
-  FLOAT UnknownData2[Count];
+  } TM[Count] <name="Matrixes">;
 
+  BYTE Indexes[Count];
+  FLOAT Weights[Count];
   struct {
-    CHAR Name[16];
-  } NAM[Count];
-  } W[2] <optimize=false>;
+    char Name[16];
+  } NAMES[Count];
+} OM <name=getName>;
+
+FILE_HEADER FileHeader <name="File Header">;
+
+struct {
+  OM ObjectMatrix[FileHeader.OMCount] <optimize = false>;
+} MATERIALS <name="Object locator">;
+
+string getName(OM &om)
+{
+  return om.NAMES[0].Name;
 };
+
 
 typedef struct {
   char Name[16];
   UINT FaceCount;
   UINT VertexCount;
   UINT MatrixIndex;
-  UINT Unknown; // 1
-  UINT Unknown; // 1
+  UINT A; 
+  UINT B;
 
   FLOAT Unknown;
   VECTOR_3F Position;
@@ -97,16 +80,22 @@ typedef struct {
     VECTOR_3F VertexCoordinates[VertexCount];
   } VERTEXES <name="Vertex coordinates">;
 
-  BYTE UnknownData[VertexCount];
+  BYTE U0[VertexCount*B]; 
 
   struct {
     FLOAT X;
-  } UNKNOWN[VertexCount] <name="Unknown">;
+  } UNKNOWN[VertexCount*B] <name="Unknown">;
 
   struct {
-    VECTOR_2F UV;
-    VECTOR_3F Normal;
-  } UV_NORMAL[VertexCount];
+    VECTOR_3F Normal[VertexCount];
+  } NORMALS;
+
+  if (A == 3) // color?
+    BYTE U1[VertexCount*4];      
+
+  struct {
+    VECTOR_2F UV[VertexCount];
+  } UVS;
 
   struct {
     UINT16 I1;
@@ -117,6 +106,7 @@ typedef struct {
   struct {
     UINT16 Index;
   } UNKNOWN_INDEXES[FaceCount];  
+
 } OBJECT <name=getObjectName>;
 
 string getObjectName(OBJECT &object)
@@ -127,6 +117,8 @@ string getObjectName(OBJECT &object)
 struct {
   OBJECT Object[FileHeader.ObjectCount] <optimize = false>;
 } OBJECTS <name="Objects">;
+
+CHAR Name[FileHeader.Length];
 
 
 

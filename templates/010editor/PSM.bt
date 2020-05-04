@@ -33,20 +33,24 @@ typedef struct {
   UINT Unknown;
   UINT OMCount;
   UINT ObjectCount;
-  UINT Unknown;
+  UINT Length;
 } FILE_HEADER;
 
 typedef struct {
-  UINT Unknown; //1
+  UINT Count; 
 
-  VECTOR_4F Rotation;
-  VECTOR_3F Position;
-  VECTOR_3F Vector;
-  VECTOR_4F Rotation;
+  struct {
+    VECTOR_4F Rotation;
+    VECTOR_3F Position;
+    VECTOR_3F Vector;
+    VECTOR_4F Rotation;
+  } TM[Count] <name="Matrixes">;
 
-  UBYTE Unknown;
-  FLOAT Unknown;
-  char Name[16];
+  BYTE Indexes[Count];
+  FLOAT Weights[Count];
+  struct {
+    char Name[16];
+  } NAMES[Count];
 } OM <name=getName>;
 
 FILE_HEADER FileHeader <name="File Header">;
@@ -57,7 +61,7 @@ struct {
 
 string getName(OM &om)
 {
-  return om.Name;
+  return om.NAMES[0].Name;
 };
 
 
@@ -83,9 +87,12 @@ typedef struct {
   } UNKNOWN[VertexCount] <name="Unknown">;
 
   struct {
-    VECTOR_2F UV;
-    VECTOR_3F Normal;
-  } UV_NORMAL[VertexCount];
+    VECTOR_3F Normal[VertexCount];
+  } NORMALS;
+
+  struct {
+    VECTOR_2F UV[VertexCount];
+  } UVS;
 
   struct {
     UINT16 I1;
@@ -106,6 +113,8 @@ string getObjectName(OBJECT &object)
 struct {
   OBJECT Object[FileHeader.ObjectCount] <optimize = false>;
 } OBJECTS <name="Objects">;
+
+CHAR Name[FileHeader.Length];
 
 UINT Unknown;
 UINT Unknown;
