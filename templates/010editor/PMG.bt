@@ -1,0 +1,153 @@
+//------------------------------------------------
+//--- 010 Editor v8.0.1 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: 
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+local uint i;
+
+typedef struct {
+  FLOAT U;
+  FLOAT V;
+} VECTOR_2F;
+
+typedef struct {
+  FLOAT X;
+  FLOAT Y;
+  FLOAT Z;
+} VECTOR_3F;
+
+typedef struct {
+  UINT16 X;
+  UINT16 Y;
+  UINT16 Z;
+} VECTOR_3U16;
+
+typedef struct {
+  FLOAT X;
+  FLOAT Y;
+  FLOAT Z;
+  FLOAT W;
+} VECTOR_4F;
+
+typedef struct {
+  UBYTE Red;
+  UBYTE Green;
+  UBYTE Blue;
+  UBYTE Alpha;
+} COLOR;
+
+struct {
+  CHAR Magic[4];
+  UINT ObjectCount;
+  UINT CountB;
+  UINT CountC;
+  UINT CountD;
+} HEADER;
+
+struct {
+  FLOAT X;
+  FLOAT Y;
+  FLOAT Z;
+  FLOAT R;
+} N;
+
+struct {
+  UINT DataOffset1;
+  UINT DataOffset2;
+  UINT DataOffset3;
+  UINT DataOffset4;
+  UINT DataOffset5;
+  UINT DataSize1;
+  UINT DataOffset7;
+  UINT DataSize2;
+  UINT DataOffset9;
+  UINT DataOffset10;
+  UINT DataOffset11;
+  UINT DataSize3;
+  UINT DataOffset13;
+  UINT DataSize4;
+} DATA_TABLE; 
+
+struct {
+  UINT Unknown;
+  UINT Unknown; 
+  UINT Unknown;
+  UINT Unknown;
+  UINT Unknown;
+  UINT Unknown;
+} UNKNOWN_DATA_1[HEADER.CountB];
+
+struct {
+  UINT Unknown;
+  UINT Unknown; 
+  FLOAT X;
+  FLOAT Y;
+  FLOAT Z;
+  FLOAT R;
+  FLOAT X;
+  FLOAT Y;
+  FLOAT Z;
+  FLOAT R;
+  INT Unknown;
+} UNKNOWN_DATA_2[HEADER.CountD];
+
+struct {
+  UINT FaceCount;
+  UINT VertexCount;
+  UINT Unknown; // 0
+  UINT Index;
+  
+  FLOAT X;
+  FLOAT Y;
+  FLOAT Z;
+  FLOAT R;
+  
+  struct {
+    UINT VertexCoordinatesDataOffset;
+    UINT NormalDataOffset;
+    UINT UVDataOffset;
+    UINT ColorsDataOffset;
+    INT Offset;
+    INT Offset;
+    UINT IndexesDataOffset;
+    INT Offset;
+    INT Offset;
+    INT Offset;
+  } DATA_OFFSETS;
+} OBJECT_HEADER[HEADER.ObjectCount];
+
+CHAR UnknownData[DATA_TABLE.DataSize1] <name="materials??">;
+
+struct {
+  for (i = 0; i < HEADER.ObjectCount; ++i) {
+    struct {
+      struct {
+       VECTOR_3F Coordinates[OBJECT_HEADER[i].VertexCount];
+      } VERTEXES;
+
+      struct {
+        VECTOR_3F Normal[OBJECT_HEADER[i].VertexCount];
+      } NORMALS;
+
+      struct {
+        VECTOR_2F Coordinates[OBJECT_HEADER[i].VertexCount];
+      } UV;
+
+      struct {
+        COLOR RGBA[OBJECT_HEADER[i].VertexCount];
+      } COLORS;
+
+      struct {
+        UINT16 Index[OBJECT_HEADER[i].FaceCount];
+      } INDEXES;
+    } OBJECT;
+  };
+} OBJECTS_DATA;

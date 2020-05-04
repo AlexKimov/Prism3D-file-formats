@@ -1,0 +1,125 @@
+//------------------------------------------------
+//--- 010 Editor v8.0.1 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: 
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+typedef struct {
+    UINT16 I1;
+    UINT16 I2;
+    UINT16 I3;
+} VECTOR_2U16;
+
+typedef struct {
+  FLOAT U;
+  FLOAT V;
+} VECTOR_2F;
+
+typedef struct {
+  FLOAT X;
+  FLOAT Y;
+  FLOAT Z;
+} VECTOR_3F;
+
+typedef struct {
+  FLOAT X;
+  FLOAT Y;
+  FLOAT Z;
+  FLOAT W;
+} VECTOR_4F;
+
+typedef struct {
+  UINT Unknown;
+  UINT OMCount;
+  UINT ObjectCount;
+} FILE_HEADER;
+
+typedef struct {
+  UINT Count; 
+
+  struct {
+    VECTOR_4F Rotation;
+    VECTOR_3F Position;
+    VECTOR_3F Vector;
+    VECTOR_4F Rotation;
+  } TM[Count] <name="Matrixes">;
+
+  BYTE Indexes[Count];
+  FLOAT Weights[Count];
+  struct {
+    char Name[16];
+  } NAMES[Count];
+} OM <name=getName>;
+
+FILE_HEADER FileHeader <name="File Header">;
+
+struct {
+  OM ObjectMatrix[FileHeader.OMCount] <optimize = false>;
+} MATERIALS <name="Object locator">;
+
+string getName(OM &om)
+{
+  return om.NAMES[0].Name;
+};
+
+
+typedef struct {
+  char Name[16];
+  UINT FaceCount;
+  UINT VertexCount;
+  UINT MatrixIndex;
+  UINT Unknown; // 1
+  UINT MeshCount; // 1
+
+  FLOAT Unknown;
+  VECTOR_3F Position;
+
+  struct {
+    VECTOR_3F VertexCoordinates[VertexCount];
+  } VERTEXES <name="Vertex coordinates">;
+
+  struct {
+    BYTE Unknown[MeshCount];
+  } UNKNOWN_D[VertexCount];
+
+  struct {
+    FLOAT Unknown[MeshCount];
+  } UNs[VertexCount];
+
+  struct {
+    VECTOR_3F Normal[VertexCount];
+  } NORMALS;
+
+  struct {
+    VECTOR_2F UV[VertexCount];
+  } UVS;
+
+  struct {
+    VECTOR_2U16 Indexes;
+  } FACE_INDEXES[FaceCount];
+} OBJECT <name=getObjectName>;
+
+string getObjectName(OBJECT &object)
+{
+  return object.Name;
+};
+
+struct {
+  OBJECT Object[FileHeader.ObjectCount] <optimize = false>;
+} OBJECTS <name="Objects">;
+
+UINT Unknown;
+UINT Unknown;
+
+
+
+
+
+

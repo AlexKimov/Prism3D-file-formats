@@ -1,0 +1,29 @@
+//------------------------------------------------
+//--- 010 Editor v8.0.1 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: 
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+struct {
+  UINT Unknown;
+  UINT Unknown;
+  UINT Unknown;
+  UINT Count;
+  UINT Count2;
+  FLOAT Unknown;
+  UINT Unknown;
+  UINT Unknown;
+  UINT Unknown;
+  UINT Size;
+  UINT Size;
+} HEADER;
+
+FLOAT Unknown1[HEADER.Count];
+BYTE Indexes[HEADER.Count2];

@@ -1,0 +1,62 @@
+//------------------------------------------------
+//--- 010 Editor v8.0.1 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: 
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+typedef struct {
+  FLOAT X;
+  FLOAT Y;
+  FLOAT Z;
+} VECTOR_3F;
+
+typedef struct {
+  FLOAT X;
+  FLOAT Y;
+  FLOAT Z;
+  FLOAT W;
+} VECTOR_4F;
+
+
+UINT Unknown;
+CHAR Name[16];
+UINT ObjectCount;
+UINT16 FrameCount <name="Frames">;
+UINT16 Unknown;
+FLOAT Unknown;
+UINT Unknown;
+UINT Unknown;
+UINT Unknown;
+
+struct {
+  UINT Unknown;
+  BYTE Unknown;  
+  struct {
+    VECTOR_4F Rotation;
+    VECTOR_3F Position;
+    VECTOR_3F Scale;
+    VECTOR_4F Unknown;
+  } FRAME[FrameCount];
+} ANIMATIONS[ObjectCount];
+
+FLOAT U0[FrameCount] <name="??">;
+
+struct {
+  FLOAT X;
+  FLOAT Y;
+  FLOAT Z; 
+} U1[FrameCount] <name="??">;
+
+struct {
+  FLOAT X;
+  FLOAT Y;
+  FLOAT Z;
+  FLOAT W;
+} U2[FrameCount] <name="??">;

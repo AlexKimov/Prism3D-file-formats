@@ -1,0 +1,53 @@
+//------------------------------------------------
+//--- 010 Editor v8.0.1 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: 
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+typedef struct {
+  FLOAT X;
+  FLOAT Y;
+  FLOAT Z;
+} VECTOR_3F;
+
+typedef struct {
+  FLOAT X;
+  FLOAT Y;
+  FLOAT Z;
+  FLOAT W;
+} VECTOR_4F;
+
+UINT Unknown;
+
+UINT Unknown;
+CHAR Name[16];
+UINT Unknown;
+
+UINT16 CountA1;
+UINT16 CountA2;
+FLOAT A[3];
+UINT CountB;
+
+struct {
+  UBYTE Index[CountB];
+} INDEXES;
+
+struct {
+  struct {
+    VECTOR_4F Rotation;
+    VECTOR_3F Position;
+    VECTOR_3F Normal;
+    VECTOR_4F Quat;
+  } A[CountA1];
+} ANIMATIONS[CountB];
+
+struct {
+  FLOAT Data[CountA1];
+} UNKNOWN;

@@ -1,0 +1,35 @@
+//------------------------------------------------
+//--- 010 Editor v8.0.1 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: 
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+while (!FEof()) {
+  struct {
+    do
+    {
+      BYTE Unknown;
+    } while (Unknown);
+
+    FLOAT X;
+    FLOAT Y;
+    FLOAT Z;
+    FLOAT X;
+    FLOAT Y;
+    FLOAT Z;
+
+    UINT16 Count;
+
+    struct {
+      UINT16 Index1;
+      UINT16 Index2;
+    } INDEXES[Count];
+  } DATA;
+};

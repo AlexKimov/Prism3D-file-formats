@@ -1,0 +1,113 @@
+//------------------------------------------------
+//--- 010 Editor v8.0.1 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: 
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+local uint i;
+
+typedef struct {
+  FLOAT U;
+  FLOAT V;
+} VECTOR_2F;
+
+typedef struct {
+  FLOAT X;
+  FLOAT Y;
+  FLOAT Z;
+} VECTOR_3F;
+
+typedef struct {
+  FLOAT X;
+  FLOAT Y;
+  FLOAT Z;
+  FLOAT W;
+} VECTOR_4F;
+
+typedef struct {
+  UINT Unknown;
+  UINT OMCount;
+  UINT ObjectCount;
+  UINT Unknown;
+} FILE_HEADER;
+
+typedef struct {
+  UINT Unknown; // 1
+
+  char Name[16];
+
+  UINT FaceCount; // 1
+  UINT VertexCount; // 1
+  FLOAT X;
+  FLOAT X;
+  FLOAT X;
+  FLOAT X;
+} OBJECT_HEADER <name=getName>;
+
+//----------------------------------------------
+
+FILE_HEADER FileHeader <name="File Header">;
+
+struct {
+  VECTOR_3F Un1;
+  VECTOR_3F Un2;
+  VECTOR_3F U3;
+} DATA <name="Unknown">;
+
+struct {
+  OBJECT_HEADER ObjectHeader[FileHeader.OMCount] <optimize = false>;
+} HEADERS <name="Object table">;
+
+string getName(OBJECT_HEADER &oh)
+{
+  return oh.Name;
+};
+
+UINT Unknown;
+UINT Unknown;
+FLOAT Unknown;
+CHAR name[32];
+
+struct {
+  for (i = 0; i < FileHeader.OMCount; ++i) 
+  {
+    struct { 
+      struct {
+        UINT16 I1;
+        UINT16 I2;
+        UINT16 I3;
+      } FACE_INDEXES[HEADERS.ObjectHeader[i].FaceCount];
+ 
+      struct {
+        UINT16 Index;
+      } UNKNOWN_INDEXES[HEADERS.ObjectHeader[i].FaceCount];  
+
+      struct {
+        UINT16 A;
+        UINT16 C;
+        UINT16 C;
+        UINT16 C;
+      } UNKNOWN_DATA[HEADERS.ObjectHeader[i].VertexCount] <name="coordinates??">; 
+    
+      struct {
+        VECTOR_2F UVCoordinates [HEADERS.ObjectHeader[i].VertexCount];
+      } VERTEXES <name="UV coordinates">;
+    } OBJECT_DATA;
+  };
+} DATA;
+
+UINT Unknown;
+FLOAT Unknown;
+
+
+
+
+
+

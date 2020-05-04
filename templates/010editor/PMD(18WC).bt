@@ -1,0 +1,59 @@
+//------------------------------------------------
+//--- 010 Editor v8.0.1 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: 
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+UINT Unknown;
+UINT Unknown;
+UINT Count;
+UINT Unknown;
+UINT Unknown;
+UINT Unknown;
+UINT Unknown;
+UINT Unknown;
+
+struct {
+  UINT Size1;
+  UINT DataOffset1;
+  UINT DataOffset2;
+  UINT Unknown;
+  UINT DataOffset3;
+  UINT DataOffset4;
+  UINT DataOffset5;
+  UINT DataOffset6;
+} DATA_TABLE;
+
+struct {
+  UINT Unknown;
+  UINT Unknown;
+} DATA1[Count];
+
+struct {
+  UINT Unknown;
+  UINT Unknown;
+  UINT Unknown;
+  UINT Unknown;
+} DATA2;
+
+struct {
+  UINT Unknown;
+  UINT Unknown;
+  UINT Unknown;
+  UINT Unknown;
+} DATA3;
+
+UINT Unknown;
+
+struct {
+  UINT Unknown[Count];
+} DATA4;
+
+CHAR DATA5[DATA_TABLE.Size1];
