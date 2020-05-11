@@ -1,5 +1,5 @@
-# 18wheels-file-formats
-18 wheels of steel game series file formats
+# About
+Prism3D game engine: file formats and tools
 
 ## Templates and scripts (wip)
 
